@@ -1,0 +1,23 @@
+﻿@model List<Lib.io.Models.Book>
+
+<h1>Books</h1>
+
+@if (Model.Count == 0) {
+    <text>A book has not yet been entered into the system.</text>
+}
+else {
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Book</th>
+            </tr>
+        </thead>
+        @foreach (var book in Model) {
+            <tr>
+                <td>
+                    @book.Name
+                </td>
+            </tr>
+        }
+    </table>
+}

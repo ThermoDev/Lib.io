@@ -1,0 +1,26 @@
+﻿@* Add Directive for the type of Model for this View  *@
+@model Lib.io.ViewModels.RandomBookViewModel
+
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var className = Model.Members.Count > 5 ? "popular" : null;
+}
+
+@* Retrieve the Book from the ViewModel and print the name *@
+<h2 class="@className">@Model.Book.Name</h2>
+
+@if (Model.Members.Count == 0) {
+    <text>No one has rented this book before.</text>
+}
+else {
+    <ul>
+        @* Razor syntax using @ to inject C# code *@
+        @foreach (var member in Model.Members) {
+            <li>@member.Name</li>
+        }
+
+    </ul>
+}

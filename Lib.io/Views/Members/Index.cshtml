@@ -1,0 +1,24 @@
+﻿@model List<Lib.io.Models.Member>
+<h1>Members</h1>
+
+@if (Model.Count == 0) {
+    <text>A member has not rented a book yet.</text>
+}
+else {
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Member</th>
+        </tr>
+    </thead>
+    @foreach (var member in Model) {
+    <tr>
+        <td>
+            <a href="members/details/@member.Id">
+                @member.Name
+            </a>
+        </td>
+    </tr>
+    }
+</table>
+}

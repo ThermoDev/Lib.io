@@ -22,12 +22,12 @@ namespace Lib.io.Controllers {
         // GET: Members
         public ActionResult Index() {
             // Eager Loading MembershipType, retrievd from DBContext
-            var members = _context.Members.Include(c => c.GetMembershipType).ToList();
+            var members = _context.Members.Include(m => m.MembershipType).ToList();
             return View(members);
         }
         // GET: Members/Details/<id> 
         public ActionResult Details(int id) {
-            var member = _context.Members.SingleOrDefault(c => c.Id == id);
+            var member = _context.Members.Include(m => m.MembershipType).SingleOrDefault(m => m.Id == id);
             if (member == null)
                 return HttpNotFound();
             else

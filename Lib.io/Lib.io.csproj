@@ -217,9 +217,46 @@
     <Compile Include="Migrations\202008150419021_ApplyAnnotationsToMemberName.Designer.cs">
       <DependentUpon>202008150419021_ApplyAnnotationsToMemberName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008150453288_AddNameToMembershipType.cs" />
+    <Compile Include="Migrations\202008150453288_AddNameToMembershipType.Designer.cs">
+      <DependentUpon>202008150453288_AddNameToMembershipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150454078_UpdateNamesInMembershipType.cs" />
+    <Compile Include="Migrations\202008150454078_UpdateNamesInMembershipType.Designer.cs">
+      <DependentUpon>202008150454078_UpdateNamesInMembershipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150458187_UpdatePAYGForDurationZero.cs" />
+    <Compile Include="Migrations\202008150458187_UpdatePAYGForDurationZero.Designer.cs">
+      <DependentUpon>202008150458187_UpdatePAYGForDurationZero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150501166_UpdateMonthylForDurationOne.cs" />
+    <Compile Include="Migrations\202008150501166_UpdateMonthylForDurationOne.Designer.cs">
+      <DependentUpon>202008150501166_UpdateMonthylForDurationOne.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150505087_AddBirthDate.cs" />
+    <Compile Include="Migrations\202008150505087_AddBirthDate.Designer.cs">
+      <DependentUpon>202008150505087_AddBirthDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150506365_NullableBirthDate.cs" />
+    <Compile Include="Migrations\202008150506365_NullableBirthDate.Designer.cs">
+      <DependentUpon>202008150506365_NullableBirthDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150550312_AddingBookModel.cs" />
+    <Compile Include="Migrations\202008150550312_AddingBookModel.Designer.cs">
+      <DependentUpon>202008150550312_AddingBookModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150552218_RequireNameForGenre.cs" />
+    <Compile Include="Migrations\202008150552218_RequireNameForGenre.Designer.cs">
+      <DependentUpon>202008150552218_RequireNameForGenre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150552455_PopulatingBooksAndGenre.cs" />
+    <Compile Include="Migrations\202008150552455_PopulatingBooksAndGenre.Designer.cs">
+      <DependentUpon>202008150552455_PopulatingBooksAndGenre.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Member.cs" />
@@ -290,6 +327,7 @@
     <Content Include="Views\Members\Index.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Books\Random.cshtml" />
+    <Content Include="Views\Books\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -322,6 +360,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008150419021_ApplyAnnotationsToMemberName.resx">
       <DependentUpon>202008150419021_ApplyAnnotationsToMemberName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150453288_AddNameToMembershipType.resx">
+      <DependentUpon>202008150453288_AddNameToMembershipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150454078_UpdateNamesInMembershipType.resx">
+      <DependentUpon>202008150454078_UpdateNamesInMembershipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150458187_UpdatePAYGForDurationZero.resx">
+      <DependentUpon>202008150458187_UpdatePAYGForDurationZero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150501166_UpdateMonthylForDurationOne.resx">
+      <DependentUpon>202008150501166_UpdateMonthylForDurationOne.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150505087_AddBirthDate.resx">
+      <DependentUpon>202008150505087_AddBirthDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150506365_NullableBirthDate.resx">
+      <DependentUpon>202008150506365_NullableBirthDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150550312_AddingBookModel.resx">
+      <DependentUpon>202008150550312_AddingBookModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150552218_RequireNameForGenre.resx">
+      <DependentUpon>202008150552218_RequireNameForGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150552455_PopulatingBooksAndGenre.resx">
+      <DependentUpon>202008150552455_PopulatingBooksAndGenre.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -10,14 +10,18 @@ else {
         <thead>
             <tr>
                 <th>Book</th>
+                <th>Genre</th>
             </tr>
         </thead>
         @foreach (var book in Model) {
             <tr>
                 <td>
-                    @book.Name
-                </td>
-            </tr>
+                    @Html.ActionLink(book.Name, "details", "books", new { Id = book.Id }, null)
+            </td>
+            <td>
+                @book.Genre.Name
+            </td>
+        </tr>
         }
     </table>
 }

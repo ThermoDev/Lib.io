@@ -10,15 +10,19 @@ else {
             <tr>
                 <th>Member</th>
                 <th>Discount Rate</th>
+                <th>Membership Type</th>
             </tr>
         </thead>
         @foreach (var member in Model) {
             <tr>
                 <td>
-                    @Html.ActionLink(member.Name, "Details", "Members", new { Id = member.Id }, null)
+                    @Html.ActionLink(member.Name, "details", "members", new { Id = member.Id }, null)
                 </td>
                 <td>
-                    @member.GetMembershipType.DiscountRate%
+                    @member.MembershipType.DiscountRate%
+                </td>
+                <td>
+                    @member.MembershipType.Name
                 </td>
             </tr>
         }

@@ -1,3 +1,9 @@
 ﻿@model Lib.io.Models.Member
 
 <h1>@Model.Name</h1>
+<ul>
+    <li>@Model.MembershipType.Name</li>
+    @if (Model.BirthDate.HasValue) {
+        <li>@Model.BirthDate.Value.ToShortDateString()</li>
+    }
+</ul>

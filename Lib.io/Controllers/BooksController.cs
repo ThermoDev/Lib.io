@@ -6,17 +6,21 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Lib.io.Models;
 using Lib.io.ViewModels;
+using System.Data.Entity;
 
 namespace Lib.io.Controllers {
     // Derives from Controller class
     public class BooksController : Controller {
 
-        // Temp Psuedo-Database
-        public static IEnumerable<Book> books = new List<Book> {
-                new Book {Id=0, Name = "Case of the Singing Monkey" },
-                new Book {Id=1, Name = "Primed for Crime" }
-            };
+        private ApplicationDbContext _context;
 
+        public BooksController() {
+            _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing) {
+            _context.Dispose();
+        }
 
         // GET: Books
         // Returns an ActionResult
@@ -24,7 +28,8 @@ namespace Lib.io.Controllers {
         // Nullable by using ?, string default to nullable
         // Paramaters are query values in Request
         public ActionResult Index(int? pageIndex, string sortBy) {
-            if(!pageIndex.HasValue && String.IsNullOrEmpty(sortBy)) {
+            var books = _context.Books.Include(b => b.Genre).ToList();
+            if (!pageIndex.HasValue && String.IsNullOrEmpty(sortBy)) {
                 return View(books);
             }
 
@@ -59,8 +64,18 @@ namespace Lib.io.Controllers {
         }
 
         // Parse id as parameter which is setup by RouteConfig
+        // Books/Edit/<id>
         public ActionResult Edit(int id) {
             return Content("Id=" + id);
+        }
+
+        // Books/Details/<id>
+        public ActionResult Details(int id) {
+            var book = _context.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == id);
+            if (book == null)
+                return HttpNotFound();
+            else
+                return View(book);
         }
     }
 }

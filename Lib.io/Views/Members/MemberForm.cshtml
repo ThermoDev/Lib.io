@@ -6,10 +6,11 @@
 
 <h2>New Member</h2>
 
-@using (Html.BeginForm("Save", "Books")) {
+@using (Html.BeginForm("Save", "Members")) {
     <div class="form-group">
         @Html.LabelFor(m => m.Member.Name)
         @Html.TextBoxFor(m => m.Member.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Member.Name)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Member.BirthDate)
@@ -18,6 +19,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Member.MembershipTypeId)
         @Html.DropDownListFor(m => m.Member.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type...", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Member.MembershipTypeId)
     </div>
     <div class="checkbox">
         <label>

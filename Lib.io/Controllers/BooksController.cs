@@ -18,7 +18,7 @@ namespace Lib.io.Controllers {
         public BooksController() {
             _context = new ApplicationDbContext();
         }
-        
+
         // Override Controller Method to dispose of context when done
         protected override void Dispose(bool disposing) {
             _context.Dispose();
@@ -79,9 +79,14 @@ namespace Lib.io.Controllers {
                 bookInDb.Name = book.Name;
                 bookInDb.ReleaseDate = book.ReleaseDate;
                 bookInDb.GenreId = book.GenreId;
-                bookInDb.NumberInStock= book.NumberInStock;
+                bookInDb.NumberInStock = book.NumberInStock;
             }
-            _context.SaveChanges();
+            try {
+                _context.SaveChanges();
+            }
+            catch (Exception e) {
+                Console.Write(e);
+            }
             return RedirectToAction("Index", "Books");
         }
 

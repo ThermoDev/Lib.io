@@ -25,7 +25,7 @@ namespace Lib.io.Controllers {
             var viewModel = new MemberViewFormModel {
                 MembershipTypes = membershipTypes
             };
-            return View("BookForm", viewModel);
+            return View("MemberForm", viewModel);
         }
 
         public ActionResult Edit(int id) {
@@ -42,8 +42,14 @@ namespace Lib.io.Controllers {
 
         // Model-Binding that is fetched from request data
         [HttpPost]
-        public ActionResult Save(MemberViewFormModel viewModel) {
-            var member = viewModel.Member;
+        public ActionResult Save(Member member) {
+            if (!ModelState.IsValid) {
+                var viewModel = new MemberViewFormModel {
+                    Member = member,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+                return View("MemberForm", viewModel);
+            }
 
             if (member.Id == 0) {
                 _context.Members.Add(member);

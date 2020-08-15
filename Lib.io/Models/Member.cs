@@ -8,7 +8,7 @@ namespace Lib.io.Models {
     public class Member {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter the member's name.")]
         [StringLength(255)]
         public string Name { get; set; }
 

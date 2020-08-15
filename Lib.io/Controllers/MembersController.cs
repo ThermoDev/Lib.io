@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Lib.io.Models;
+using Lib.io.ViewModels;
 
 namespace Lib.io.Controllers {
     public class MembersController : Controller {
@@ -17,6 +18,47 @@ namespace Lib.io.Controllers {
 
         protected override void Dispose(bool disposing) {
             _context.Dispose();
+        }
+
+        public ActionResult New() {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new MemberViewFormModel {
+                MembershipTypes = membershipTypes
+            };
+            return View("BookForm", viewModel);
+        }
+
+        public ActionResult Edit(int id) {
+            var member = _context.Members.SingleOrDefault(m => m.Id == id);
+            if (member == null)
+                return HttpNotFound();
+            var viewModel = new MemberViewFormModel {
+                Member = member,
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+            return View("MemberForm", viewModel);
+        }
+
+
+        // Model-Binding that is fetched from request data
+        [HttpPost]
+        public ActionResult Save(MemberViewFormModel viewModel) {
+            var member = viewModel.Member;
+
+            if (member.Id == 0) {
+                _context.Members.Add(member);
+            }
+            else {
+                var memberInDb = _context.Members.Single(m => m.Id == member.Id);
+
+                memberInDb.Name = member.Name;
+                memberInDb.BirthDate = member.BirthDate;
+                memberInDb.MembershipTypeId = member.MembershipTypeId;
+                memberInDb.IsSubscribedToNewsletter = member.IsSubscribedToNewsletter;
+                
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Members");
         }
 
         // GET: Members

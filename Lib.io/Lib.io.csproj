@@ -263,6 +263,8 @@
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BookViewFormModel.cs" />
+    <Compile Include="ViewModels\MemberViewFormModel.cs" />
     <Compile Include="ViewModels\RandomBookViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +330,8 @@
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Books\Random.cshtml" />
     <Content Include="Views\Books\Details.cshtml" />
+    <Content Include="Views\Members\MemberForm.cshtml" />
+    <Content Include="Views\Books\BookForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

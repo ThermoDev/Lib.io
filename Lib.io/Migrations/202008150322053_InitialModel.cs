@@ -8,6 +8,15 @@ namespace Lib.io.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.Members",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -94,6 +103,7 @@ namespace Lib.io.Migrations
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Members");
         }
     }
 }

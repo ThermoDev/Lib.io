@@ -201,12 +201,29 @@
     <Compile Include="Migrations\202008150322053_InitialModel.Designer.cs">
       <DependentUpon>202008150322053_InitialModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008150336191_AddIsSubToMember.cs" />
+    <Compile Include="Migrations\202008150336191_AddIsSubToMember.Designer.cs">
+      <DependentUpon>202008150336191_AddIsSubToMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150340339_AddMembershipType.cs" />
+    <Compile Include="Migrations\202008150340339_AddMembershipType.Designer.cs">
+      <DependentUpon>202008150340339_AddMembershipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150350515_PopulateMembershipTypes.cs" />
+    <Compile Include="Migrations\202008150350515_PopulateMembershipTypes.Designer.cs">
+      <DependentUpon>202008150350515_PopulateMembershipTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008150419021_ApplyAnnotationsToMemberName.cs" />
+    <Compile Include="Migrations\202008150419021_ApplyAnnotationsToMemberName.Designer.cs">
+      <DependentUpon>202008150419021_ApplyAnnotationsToMemberName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Member.cs" />
+    <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\RandomBookViewModel.cs" />
@@ -293,6 +310,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202008150322053_InitialModel.resx">
       <DependentUpon>202008150322053_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150336191_AddIsSubToMember.resx">
+      <DependentUpon>202008150336191_AddIsSubToMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150340339_AddMembershipType.resx">
+      <DependentUpon>202008150340339_AddMembershipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150350515_PopulateMembershipTypes.resx">
+      <DependentUpon>202008150350515_PopulateMembershipTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008150419021_ApplyAnnotationsToMemberName.resx">
+      <DependentUpon>202008150419021_ApplyAnnotationsToMemberName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

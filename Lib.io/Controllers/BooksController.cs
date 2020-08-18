@@ -46,7 +46,6 @@ namespace Lib.io.Controllers {
         public ActionResult New() {
             var genres = _context.Genres.ToList();
             var viewModel = new BookViewFormModel {
-                Book = new Book(),
                 Genres = genres
             };
             ViewBag.Message = "Create Book";
@@ -58,8 +57,7 @@ namespace Lib.io.Controllers {
             var book = _context.Books.SingleOrDefault(b => b.Id == id);
             if (book == null)
                 return HttpNotFound();
-            var viewModel = new BookViewFormModel {
-                Book = book,
+            var viewModel = new BookViewFormModel(book) {
                 Genres = _context.Genres.ToList()
             };
             ViewBag.Message = "Edit Book";
@@ -72,8 +70,7 @@ namespace Lib.io.Controllers {
         [ValidateAntiForgeryToken]
         public ActionResult Save(Book book) {
             if (!ModelState.IsValid) {
-                var viewModel = new BookViewFormModel {
-                    Book = book,
+                var viewModel = new BookViewFormModel(book) {
                     Genres = _context.Genres.ToList()
                 };
                 return View("BookForm", viewModel);

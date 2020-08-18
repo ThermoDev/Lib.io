@@ -11,26 +11,27 @@
     @Html.ValidationSummary(false, "")
 
     <div class="form-group">
-        @Html.LabelFor(b => b.Book.Name)
-        @Html.TextBoxFor(b => b.Book.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(b => b.Book.Name)
+        @Html.LabelFor(b => b.Name)
+        @Html.TextBoxFor(b => b.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Name)
     </div>
     <div class="form-group">
-        @Html.LabelFor(b => b.Book.ReleaseDate)
-        @Html.TextBoxFor(b => b.Book.ReleaseDate, "{0:d MMM yyyy}", new { @class = "form-control" })
-        @Html.ValidationMessageFor(b => b.Book.ReleaseDate)
+        @Html.LabelFor(b => b.ReleaseDate)
+        @Html.TextBoxFor(b => b.ReleaseDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.ReleaseDate)
     </div>
     <div class="form-group">
-        @Html.LabelFor(b => b.Book.GenreId)
-        @Html.DropDownListFor(b => b.Book.GenreId, new SelectList(Model.Genres, "Id", "Name"), "Select Genre...", new { @class = "form-control" })
-        @Html.ValidationMessageFor(b => b.Book.GenreId)
+        @Html.LabelFor(b => b.GenreId)
+        @Html.DropDownListFor(b => b.GenreId, new SelectList(Model.Genres, "Id", "Name"), "Select Genre...", new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.GenreId)
     </div>
     <div class="form-group">
-        @Html.LabelFor(b => b.Book.NumberInStock)
-        @Html.TextBoxFor(b => b.Book.NumberInStock, new { @class = "form-control" })
-        @Html.ValidationMessageFor(b => b.Book.NumberInStock)
+        @Html.LabelFor(b => b.NumberInStock)
+        @Html.TextBoxFor(b => b.NumberInStock, new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.NumberInStock)
     </div>
-    @Html.HiddenFor(b => b.Book.Id)
+
+    @Html.HiddenFor(b => b.Id)
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>
 }

@@ -42,16 +42,18 @@ namespace Lib.io.Controllers {
             return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
         }
 
+        // GET:Books/New
         public ActionResult New() {
             var genres = _context.Genres.ToList();
             var viewModel = new BookViewFormModel {
+                Book = new Book(),
                 Genres = genres
             };
             ViewBag.Message = "Create Book";
             return View("BookForm", viewModel);
         }
 
-
+        // GET:Books/Edit/<id>
         public ActionResult Edit(int id) {
             var book = _context.Books.SingleOrDefault(b => b.Id == id);
             if (book == null)
@@ -67,10 +69,18 @@ namespace Lib.io.Controllers {
 
         // Model-Binding that is fetched from request data
         [HttpPost]
-        public ActionResult Save(BookViewFormModel viewModel) {
-            var book = viewModel.Book;
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(Book book) {
+            if (!ModelState.IsValid) {
+                var viewModel = new BookViewFormModel {
+                    Book = book,
+                    Genres = _context.Genres.ToList()
+                };
+                return View("BookForm", viewModel);
+            }
 
             if (book.Id == 0) {
+                book.DateAdded = DateTime.Today;
                 _context.Books.Add(book);
             }
             else {
@@ -81,12 +91,7 @@ namespace Lib.io.Controllers {
                 bookInDb.GenreId = book.GenreId;
                 bookInDb.NumberInStock = book.NumberInStock;
             }
-            try {
-                _context.SaveChanges();
-            }
-            catch (Exception e) {
-                Console.Write(e);
-            }
+            _context.SaveChanges();
             return RedirectToAction("Index", "Books");
         }
 

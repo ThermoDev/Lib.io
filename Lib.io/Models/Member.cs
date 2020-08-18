@@ -8,7 +8,7 @@ namespace Lib.io.Models {
     public class Member {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Please enter the member's name.")]
+        [Required(ErrorMessage = "Please enter your name.")]
         [StringLength(255)]
         public string Name { get; set; }
 
@@ -20,6 +20,7 @@ namespace Lib.io.Models {
         public byte MembershipTypeId { get; set; }
 
         [Display(Name = "Date of Birth")]
+        [Min18YearsIfMember]
         public DateTime? BirthDate { get; set; }
     }
 }

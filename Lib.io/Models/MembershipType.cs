@@ -10,5 +10,9 @@ namespace Lib.io.Models {
         public byte DurationInMonths { get; set; }
         public byte DiscountRate { get; set; }
         public string Name { get; set; }
+
+        // ID of membershiptype setup in migration
+        public static readonly byte Unknown = 0;
+        public static readonly byte PayAsYouGo = 1;
     }
 }

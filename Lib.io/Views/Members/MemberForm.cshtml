@@ -5,21 +5,27 @@
 }
 
 <h2>New Member</h2>
-
+@*
+    Form to save a Member, whether to Create or Update.
+    Populates fields if we are upating a current member using ID.
+*@
 @using (Html.BeginForm("Save", "Members")) {
+    @Html.ValidationSummary(false, "")
+
     <div class="form-group">
         @Html.LabelFor(m => m.Member.Name)
         @Html.TextBoxFor(m => m.Member.Name, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Member.Name)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Member.BirthDate)
-        @Html.TextBoxFor(m => m.Member.BirthDate, "{0:d MMM yyyy}", new { @class = "form-control" })
-    </div>
-    <div class="form-group">
         @Html.LabelFor(m => m.Member.MembershipTypeId)
         @Html.DropDownListFor(m => m.Member.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type...", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Member.MembershipTypeId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Member.BirthDate)
+        @Html.TextBoxFor(m => m.Member.BirthDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Member.BirthDate)
     </div>
     <div class="checkbox">
         <label>
@@ -27,5 +33,24 @@
         </label>
     </div>
     @Html.HiddenFor(m => m.Member.Id)
+    @*
+        Apply Anti-Forgery Token to prevent CSRF (Cross-Site Request Forgery)
+        Puts a RequestVerificationToken as a hidden field
+        Hidden field only exists in the member form, which prevents CSRF.
+    *@
+    @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@*
+    Enables Client-Side Validation by using Annotations applied to property in the Model
+    When a Controller receives a parameter receives a parameter on an action,
+    MVC Framework validates the object using data annotations applied to each property.
+    When rendering input fields using Razors @Html, Razor-View Engine looks at the data annotations.
+    Razor-View Engine automatically applies HTML attributes based on data annotations.
+    Note: Custom validation is not applied to client-side validation.
+*@
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

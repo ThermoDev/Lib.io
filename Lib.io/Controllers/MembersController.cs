@@ -23,6 +23,7 @@ namespace Lib.io.Controllers {
         public ActionResult New() {
             var membershipTypes = _context.MembershipTypes.ToList();
             var viewModel = new MemberViewFormModel {
+                Member = new Member(),
                 MembershipTypes = membershipTypes
             };
             return View("MemberForm", viewModel);
@@ -41,7 +42,9 @@ namespace Lib.io.Controllers {
 
 
         // Model-Binding that is fetched from request data
+        // Validates the Anti-Forgery Token provided by the members form.
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Member member) {
             if (!ModelState.IsValid) {
                 var viewModel = new MemberViewFormModel {

@@ -211,6 +211,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Dtos\BookDto.cs" />
+    <Compile Include="Dtos\GenreDto.cs" />
     <Compile Include="Dtos\MemberDto.cs" />
     <Compile Include="Dtos\MembershipTypeDto.cs" />
     <Compile Include="Global.asax.cs">

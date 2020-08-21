@@ -11,6 +11,7 @@ namespace Lib.io.App_Start {
         public MappingProfile() {
             // Automapper uses reflection to scan these types,
             // find their properties, and maps them based on their name
+            // Two Way Mapping from Model <-> ModelDto
             Mapper.CreateMap<Member, MemberDto>();
             Mapper.CreateMap<MemberDto, Member>().ForMember(m => m.Id, opt => opt.Ignore());
 
@@ -19,6 +20,9 @@ namespace Lib.io.App_Start {
 
             Mapper.CreateMap<MembershipType, MembershipTypeDto>();
             Mapper.CreateMap<MembershipTypeDto, MembershipType>();
+
+            Mapper.CreateMap<Genre, GenreDto>();
+            Mapper.CreateMap<GenreDto, Genre>();
         }
     }
 }

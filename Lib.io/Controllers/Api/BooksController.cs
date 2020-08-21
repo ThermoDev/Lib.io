@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,7 +22,11 @@ namespace Lib.io.Controllers.Api {
         [HttpGet]
         public IEnumerable<BookDto> GetBooks() {
             // Maps the Book to the BookDto, and returns the reference to this method.
-            return _context.Books.ToList().Select(Mapper.Map<Book, BookDto>);
+            // Also includes the Genre using the Data Entity
+            return _context.Books
+                .Include(b => b.Genre)
+                .ToList()
+                .Select(Mapper.Map<Book, BookDto>);
         }
 
         // GET: /api/books/<id>

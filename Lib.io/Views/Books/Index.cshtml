@@ -50,14 +50,14 @@ else {
                         {
                             data: "name",
                             render: (data, type, book) => {
-                                return "<a href='/api/books/edit/" + book.id + "'>" + book.name + '</a>'
+                                return "<a href='/books/edit/" + book.id + "'>" + book.name + '</a>'
                             }
                         },
                         {
-                            data: "name"
+                            data: "genre.name"
                         },
                         {
-                            data: "genre.name"
+                            data: "numberInStock"
                         },
                         {
                             data: "id",

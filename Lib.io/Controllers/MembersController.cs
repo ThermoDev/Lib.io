@@ -73,8 +73,8 @@ namespace Lib.io.Controllers {
         // GET: Members
         public ActionResult Index() {
             // Eager Loading MembershipType, retrievd from DBContext
-            var members = _context.Members.Include(m => m.MembershipType).ToList();
-            return View(members);
+            //var members = _context.Members.Include(m => m.MembershipType).ToList();
+            return View();
         }
         // GET: Members/Details/<id> 
         public ActionResult Details(int id) {

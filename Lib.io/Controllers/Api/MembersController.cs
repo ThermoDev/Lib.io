@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,12 +22,15 @@ namespace Lib.io.Controllers.Api {
         [HttpGet]
         public IEnumerable<MemberDto> GetMembers() {
             // Maps the Member to the MemberDto, and returns the reference to this method.
-            return _context.Members.ToList().Select(Mapper.Map<Member, MemberDto>);
+            return _context.Members
+                .Include(m => m.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Member, MemberDto>);
         }
 
         // GET: /api/members/<id>
         [HttpGet]
-        public IHttpActionResult GetMembes(int id) {
+        public IHttpActionResult GetMembers(int id) {
             var member = _context.Members.SingleOrDefault(m => m.Id == id);
 
             if (member == null)
@@ -69,9 +73,7 @@ namespace Lib.io.Controllers.Api {
 
         // DELETE: /apis/members/<id>
         [HttpDelete]
-        public void DeleteMember(int id) {
-            if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+        public IHttpActionResult DeleteMember(int id) {
 
             var memberInDb = _context.Members.Single(m => m.Id == id);
             if (memberInDb == null)
@@ -79,6 +81,8 @@ namespace Lib.io.Controllers.Api {
 
             _context.Members.Remove(memberInDb);
             _context.SaveChanges();
+
+            return Ok();
         }
     }
 }

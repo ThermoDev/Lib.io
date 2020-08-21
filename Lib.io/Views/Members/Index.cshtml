@@ -1,50 +1,61 @@
 ﻿@model List<Lib.io.Models.Member>
 <h1>Members</h1>
 
-@if (Model.Count == 0) {
-    <text>A member has not rented a book yet.</text>
-}
-else {
-    <table id="members" class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Member</th>
-                <th>Discount Rate</th>
-                <th>Membership Type</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        @foreach (var member in Model) {
-            <tr>
-                <td>
-                    @Html.ActionLink(member.Name, "Edit", "Members", new { Id = member.Id }, null)
-                </td>
-                <td>
-                    @member.MembershipType.DiscountRate%
-                </td>
-                <td>
-                    @member.MembershipType.Name
-                </td>
-                <td>
-                    <button data-member-id="@member.Id" class="btn-link js-delete">Delete</button>
-                </td>
-            </tr>
-        }
-    </table>
-}
+<table id="members" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Member</th>
+            <th>Discount Rate</th>
+            <th>Membership Type</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
 @section scripts {
     <script>
         $(document).ready(() => {
+            let table = $("#members").DataTable({
+                ajax: {
+                    url: "/api/members",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: (data, type, member) => {
+                            return "<a href='/api/members/edit/" + member.id + "'>" + member.name + '</a>'
+                        }
+                    },
+                    {
+                        data: "membershipType.discountRate"
+                    },
+                    {
+                        data: "membershipType.name"
+                    },
+                    {
+                        data: "id",
+                        render: (data, type, member) => {
+                            return "<button class='btn-link js-delete' data-member-name='" + member.name + "' data-member-id=" + data + ">Delete</button>"
+                        }
+                    }
+                ]
+            });
+
             $("#members").on("click", ".js-delete", function () {
                 let button = $(this);
 
-                bootbox.confirm("Are you sure you want to delete this customer?", (result) => {
+                // Open a BootBox Confirm on Click
+                bootbox.confirm("Are you sure you want to delete the member: " + button.attr("data-member-name") + "?", (result) => {
                     if (result) {
                         $.ajax({
                             url: "/api/members/" + button.attr("data-member-id"),
                             method: "DELETE",
                             success: () => {
-                                button.parents("tr").remove();
+                                // Retrieve row from the DataTable by finding the tr tag from the parent,
+                                // then call remove() and update the table using draw()
+                                table.row(button.parents('tr')).remove().draw();
                             }
                         })
                     }

@@ -14,9 +14,14 @@ namespace Lib.io.Dtos {
         public string Name { get; set; }
 
         public bool IsSubscribedToNewsletter { get; set; }
-        
+
         public byte MembershipTypeId { get; set; }
-        
+
+
+        // Don't add MembershipType here, as it couples this DTO to our Domain Object
+        // Instead, create a new DTO for MembershipType
+        public MembershipTypeDto MembershipType { get; set; }
+
         // [Min18YearsIfMember]
         public DateTime? BirthDate { get; set; }
     }

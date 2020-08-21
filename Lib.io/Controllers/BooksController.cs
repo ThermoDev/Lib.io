@@ -30,9 +30,17 @@ namespace Lib.io.Controllers {
         // Nullable by using ?, string default to nullable
         // Paramaters are query values in Request
         public ActionResult Index(int? pageIndex, string sortBy) {
+
+            if (User.IsInRole(RoleName.CanManageBooks)) {
+                return View("TableEdit");
+            }
+            else {
+                return View("TableRead");
+            }
+
             var books = _context.Books.Include(b => b.Genre).ToList();
             if (!pageIndex.HasValue && String.IsNullOrEmpty(sortBy)) {
-                return View(books);
+                return View("TableEdit", books);
             }
 
             if (!pageIndex.HasValue)
@@ -43,6 +51,7 @@ namespace Lib.io.Controllers {
         }
 
         // GET:Books/New
+        [Authorize(Roles = RoleName.CanManageBooks)]
         public ActionResult New() {
             var genres = _context.Genres.ToList();
             var viewModel = new BookViewFormModel {

@@ -1,0 +1,46 @@
+﻿
+
+
+
+@model List<Lib.io.Models.Book>
+
+<h1>Books</h1>
+<table id="books" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts {
+    <script>
+        $(document).ready(() => {
+            let table = $("#books").DataTable({
+                ajax: {
+                    url: "/api/books",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                    },
+                    {
+                        data: "genre.name"
+                    },
+                ]
+            });
+
+
+        });
+    </script>
+
+
+
+
+}
+
+
+
+

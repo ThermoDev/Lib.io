@@ -1,0 +1,92 @@
+﻿@model List<Lib.io.Models.Book>
+
+<h1>Books</h1>
+
+@Html.ActionLink("New Book", "New", "Books", null, new { @class = "btn btn-primary" })
+<table id="books" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>Genre</th>
+            <th>Number in Stock</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@*
+    <!-- Use if we are parsing the Book Model to this View from the Controller -->
+     <table class="table table-bordered">
+         <thead>
+             <tr>
+                 <th>Book</th>
+                 <th>Genre</th>
+             </tr>
+         </thead>
+         @foreach (var book in Model) {
+             <tr>
+                 <td>
+                     @Html.ActionLink(book.Name, "Edit", "Books", new { Id = book.Id }, null)
+                 </td>
+                 <td>
+                     @book.Genre.Name
+                 </td>
+             </tr>
+         }
+     </table>*@
+
+
+@section scripts {
+    <script>
+        $(document).ready(() => {
+            let table = $("#books").DataTable({
+                ajax: {
+                    url: "/api/books",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: (data, type, book) => {
+                            return "<a href='/books/edit/" + book.id + "'>" + book.name + '</a>'
+                        }
+                    },
+                    {
+                        data: "genre.name"
+                    },
+                    {
+                        data: "numberInStock"
+                    },
+                    {
+                        data: "id",
+                        render: (data, type, book) => {
+                            return "<button class='btn btn-danger js-delete' data-book-name='" + book.name + "' data-book-id=" + data + ">Delete</button>"
+                        }
+                    }
+                ]
+            });
+
+            $("#books").on("click", ".js-delete", function () {
+                let button = $(this);
+
+                // Open a BootBox Confirm on Click
+                bootbox.confirm("Are you sure you want to delete the book: " + button.attr("data-book-name") + "?", (result) => {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/books/" + button.attr("data-book-id"),
+                            method: "DELETE",
+                            success: () => {
+                                // Retrieve row from the DataTable by finding the tr tag from the parent,
+                                // then call remove() and update the table using draw()
+                                table.row(button.parents('tr')).remove().draw();
+                            }
+                        })
+                    }
+                });
+            })
+        });
+    </script>
+
+
+
+}

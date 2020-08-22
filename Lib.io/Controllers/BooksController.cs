@@ -38,6 +38,9 @@ namespace Lib.io.Controllers {
                 return View("TableRead");
             }
 
+            // Previous configuration for supplying Books to the View
+            // Use this if we do not use RESTful Design
+            /*
             var books = _context.Books.Include(b => b.Genre).ToList();
             if (!pageIndex.HasValue && String.IsNullOrEmpty(sortBy)) {
                 return View("TableEdit", books);
@@ -48,7 +51,8 @@ namespace Lib.io.Controllers {
             if (String.IsNullOrWhiteSpace(sortBy))
                 sortBy = "Name";
             return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
-        }
+            */
+    }
 
         // GET:Books/New
         [Authorize(Roles = RoleName.CanManageBooks)]
@@ -62,6 +66,7 @@ namespace Lib.io.Controllers {
         }
 
         // GET:Books/Edit/<id>
+        [Authorize(Roles = RoleName.CanManageBooks)]
         public ActionResult Edit(int id) {
             var book = _context.Books.SingleOrDefault(b => b.Id == id);
             if (book == null)
@@ -77,6 +82,7 @@ namespace Lib.io.Controllers {
         // Model-Binding that is fetched from request data
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageBooks)]
         public ActionResult Save(Book book) {
             if (!ModelState.IsValid) {
                 var viewModel = new BookViewFormModel(book) {
@@ -108,13 +114,8 @@ namespace Lib.io.Controllers {
             return Content(year + "/" + month);
         }
 
-        // Parse id as parameter which is setup by RouteConfig
-        // Books/Edit/<id>
-        public ActionResult EditIdTemp(int id) {
-            return Content("Id=" + id);
-        }
-
         // Books/Details/<id>
+        [Authorize(Roles = RoleName.CanManageBooks)]
         public ActionResult Details(int id) {
             var book = _context.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == id);
             if (book == null)

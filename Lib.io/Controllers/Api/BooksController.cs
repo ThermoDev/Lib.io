@@ -42,6 +42,7 @@ namespace Lib.io.Controllers.Api {
 
         // POST: /api/books
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageBooks)]
         public IHttpActionResult CreateBook(BookDto bookDto) {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -58,6 +59,7 @@ namespace Lib.io.Controllers.Api {
 
         // PUT: /api/books/<id>
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageBooks)]
         public void UpdateBook(int id, BookDto bookDto) {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -74,6 +76,7 @@ namespace Lib.io.Controllers.Api {
 
         // DELETE: /apis/books/<id>
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageBooks)]
         public void DeleteBook(int id) {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);

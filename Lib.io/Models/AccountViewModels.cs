@@ -1,37 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lib.io.Models
-{
-    public class ExternalLoginConfirmationViewModel
-    {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-        [Required]
-        [Display(Name ="Driver's License Number")]
-        public string DriversLicense { get; set; }
-
-        [Required]
-        public string Phone { get; set; }
-    }
-
-    public class ExternalLoginListViewModel
-    {
-        public string ReturnUrl { get; set; }
-    }
-
-    public class SendCodeViewModel
-    {
+namespace Lib.io.Models {
+    public class SendCodeViewModel {
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
         public string ReturnUrl { get; set; }
         public bool RememberMe { get; set; }
     }
 
-    public class VerifyCodeViewModel
-    {
+    public class VerifyCodeViewModel {
         [Required]
         public string Provider { get; set; }
 
@@ -46,15 +24,13 @@ namespace Lib.io.Models
         public bool RememberMe { get; set; }
     }
 
-    public class ForgotViewModel
-    {
+    public class ForgotViewModel {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
-    public class LoginViewModel
-    {
+    public class LoginViewModel {
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
@@ -69,8 +45,7 @@ namespace Lib.io.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel
-    {
+    public class RegisterViewModel {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -89,7 +64,7 @@ namespace Lib.io.Models
 
         [Required]
         [StringLength(255)]
-        [Display(Name ="Driver's License Number")]
+        [Display(Name = "Driver's License Number")]
         public string DriversLicense { get; set; }
 
         [Required]
@@ -97,8 +72,7 @@ namespace Lib.io.Models
         public string Phone { get; set; }
     }
 
-    public class ResetPasswordViewModel
-    {
+    public class ResetPasswordViewModel {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -118,11 +92,14 @@ namespace Lib.io.Models
         public string Code { get; set; }
     }
 
-    public class ForgotPasswordViewModel
-    {
+    public class ForgotPasswordViewModel {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class ExternalLoginListViewModel {
+        public string ReturnUrl { get; set; }
     }
 }

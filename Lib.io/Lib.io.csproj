@@ -286,10 +286,12 @@
       <DependentUpon>202008220758458_AddPhoneToAccount.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Genre.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\LibContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Member.cs" />
@@ -536,16 +538,18 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Members\Details.cshtml" />
-    <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Members\TableEdit.cshtml" />
     <Content Include="Views\Books\TableEdit.cshtml" />
     <Content Include="Views\Books\Random.cshtml" />
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Members\MemberForm.cshtml" />
     <Content Include="Views\Books\BookForm.cshtml" />
     <Content Include="Views\Books\TableRead.cshtml" />
+    <Content Include="Views\Members\TableRead.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ExternalAccount\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -20,6 +20,21 @@ namespace Lib.io.Controllers {
             _context.Dispose();
         }
 
+        // GET: Members
+        public ActionResult Index() {
+            // Eager Loading MembershipType, retrievd from DBContext
+            //var members = _context.Members.Include(m => m.MembershipType).ToList();
+            
+            if (User.IsInRole(RoleName.CanManageBooks)) {
+                return View("TableEdit");
+            }
+            else {
+                return View("TableRead");
+            }
+
+        }
+
+        [Authorize(Roles = RoleName.CanManageMembers)]
         public ActionResult New() {
             var membershipTypes = _context.MembershipTypes.ToList();
             var viewModel = new MemberViewFormModel {
@@ -29,6 +44,7 @@ namespace Lib.io.Controllers {
             return View("MemberForm", viewModel);
         }
 
+        [Authorize(Roles = RoleName.CanManageMembers)]
         public ActionResult Edit(int id) {
             var member = _context.Members.SingleOrDefault(m => m.Id == id);
             if (member == null)
@@ -45,6 +61,7 @@ namespace Lib.io.Controllers {
         // Validates the Anti-Forgery Token provided by the members form.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageMembers)]
         public ActionResult Save(Member member) {
             if (!ModelState.IsValid) {
                 var viewModel = new MemberViewFormModel {
@@ -70,12 +87,6 @@ namespace Lib.io.Controllers {
             return RedirectToAction("Index", "Members");
         }
 
-        // GET: Members
-        public ActionResult Index() {
-            // Eager Loading MembershipType, retrievd from DBContext
-            //var members = _context.Members.Include(m => m.MembershipType).ToList();
-            return View();
-        }
         // GET: Members/Details/<id> 
         public ActionResult Details(int id) {
             var member = _context.Members.Include(m => m.MembershipType).SingleOrDefault(m => m.Id == id);

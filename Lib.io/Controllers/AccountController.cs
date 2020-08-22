@@ -137,8 +137,10 @@ namespace Lib.io.Controllers {
                     /*
                     var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                     var roleManager = new RoleManager<IdentityRole>(roleStore);
-                    await roleManager.CreateAsync(new IdentityRole("CanManageBooks"));
-                    await UserManager.AddToRoleAsync(user.Id, "CanManageBooks");
+                    await roleManager.CreateAsync(new IdentityRole(RoleName.CanManageBooks));
+                    await UserManager.AddToRoleAsync(user.Id, RoleName.CanManageBooks);
+                    await roleManager.CreateAsync(new IdentityRole(RoleName.CanManageMembers));
+                    await UserManager.AddToRoleAsync(user.Id, RoleName.CanManageMembers);
                     */
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

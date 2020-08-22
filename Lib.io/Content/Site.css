@@ -34,3 +34,7 @@ textarea {
 .validation-summary-errors {
     color: red;
 }
+
+.jumbotron {
+    margin: 10px;
+}

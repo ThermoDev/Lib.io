@@ -41,6 +41,7 @@ namespace Lib.io.Controllers.Api {
 
         // POST: /api/members
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageMembers)]
         public IHttpActionResult CreateMember(MemberDto memberDto) {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -57,6 +58,7 @@ namespace Lib.io.Controllers.Api {
 
         // PUT: /api/members/<id>
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageMembers)]
         public void UpdateMember(int id, MemberDto memberDto) {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -73,6 +75,7 @@ namespace Lib.io.Controllers.Api {
 
         // DELETE: /apis/members/<id>
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageMembers)]
         public IHttpActionResult DeleteMember(int id) {
 
             var memberInDb = _context.Members.Single(m => m.Id == id);

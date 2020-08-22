@@ -23,6 +23,9 @@ namespace Lib.io.App_Start {
 
             Mapper.CreateMap<Genre, GenreDto>();
             Mapper.CreateMap<GenreDto, Genre>();
+
+            Mapper.CreateMap<Borrowing, BorrowingDto>();
+            Mapper.CreateMap<BorrowingDto, Borrowing>().ForMember(b => b.Id, opt => opt.Ignore());
         }
     }
 }

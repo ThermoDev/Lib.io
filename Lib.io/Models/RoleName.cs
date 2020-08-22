@@ -7,5 +7,6 @@ namespace Lib.io.Models {
     public static class RoleName {
         public const string CanManageBooks = "CanManageBooks";
         public const string CanManageMembers = "CanManageMembers";
+        public const string CanManageBorrowings = "CanManageBorrowings"; 
     }
 }

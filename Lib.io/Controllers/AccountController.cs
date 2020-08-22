@@ -141,6 +141,8 @@ namespace Lib.io.Controllers {
                     await UserManager.AddToRoleAsync(user.Id, RoleName.CanManageBooks);
                     await roleManager.CreateAsync(new IdentityRole(RoleName.CanManageMembers));
                     await UserManager.AddToRoleAsync(user.Id, RoleName.CanManageMembers);
+                    await roleManager.CreateAsync(new IdentityRole(RoleName.CanManageBorrowings));
+                    await UserManager.AddToRoleAsync(user.Id, RoleName.CanManageBorrowings);
                     */
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

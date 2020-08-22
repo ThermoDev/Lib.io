@@ -1,0 +1,38 @@
+﻿@model List<Lib.io.Models.Borrowing>
+
+<h1>Current Book Borrowings</h1>
+<table id="borrowings" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Member</th>
+            <th>Book Borrowed</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts {
+    <script>
+        $(document).ready(() => {
+            let table = $("#borrowings").DataTable({
+                ajax: {
+                    url: "/api/borrowings",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "member.name",
+                    },
+                    {
+                        data: "book.name"
+                    },
+                ]
+            });
+
+
+        });
+    </script>
+}
+
+
+
+

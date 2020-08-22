@@ -130,7 +130,7 @@ namespace Lib.io.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model) {
             if (ModelState.IsValid) {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, DriversLicense = model.DriversLicense, Phone = model.Phone };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded) {
                     // Temp Code to add a new Role Manager to the Role Store
@@ -327,7 +327,7 @@ namespace Lib.io.Controllers {
                 if (info == null) {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, DriversLicense = model.DriversLicense, Phone = model.Phone };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded) {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);

@@ -54,9 +54,9 @@ namespace Lib.io
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "301150611156761",
+               appSecret: "edbd247fa81074bb002bca01b7d2147d");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

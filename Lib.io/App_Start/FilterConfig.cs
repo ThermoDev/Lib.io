@@ -7,6 +7,7 @@ namespace Lib.io {
             // Redirects users to an error page when an action throws an exception
             filters.Add(new HandleErrorAttribute());
             filters.Add(new AuthorizeAttribute());
+            filters.Add(new RequireHttpsAttribute());
         }
     }
 }

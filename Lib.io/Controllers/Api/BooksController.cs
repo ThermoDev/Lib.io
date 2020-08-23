@@ -20,18 +20,26 @@ namespace Lib.io.Controllers.Api {
 
         // GET: /api/books
         [HttpGet]
-        public IEnumerable<BookDto> GetBooks() {
+        public IEnumerable<BookDto> GetBooks(string query = null) {
             // Maps the Book to the BookDto, and returns the reference to this method.
             // Also includes the Genre using the Data Entity
-            return _context.Books
-                .Include(b => b.Genre)
+
+            // Retreive the list normally if query is null, otherwise match query a d ensure that stock is available
+            var booksQuery = String.IsNullOrWhiteSpace(query)
+                ? _context.Books.Include(b => b.Genre)
+                : _context.Books.Include(b => b.Genre).Where(b => b.Name.Contains(query)).Where(b => b.NumberInStock > 0);
+
+            // Maps the Member to the MemberDto, and returns the reference to this method.
+            var bookDto = booksQuery
                 .ToList()
                 .Select(Mapper.Map<Book, BookDto>);
+
+            return bookDto;
         }
 
         // GET: /api/books/<id>
         [HttpGet]
-        public IHttpActionResult GetMembes(int id) {
+        public IHttpActionResult GetBook(int id) {
             var book = _context.Books.SingleOrDefault(m => m.Id == id);
 
             if (book == null)

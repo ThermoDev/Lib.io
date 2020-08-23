@@ -6,15 +6,155 @@
 
 <h2>New Borrowing Form</h2>
 
-<form>
+<form id="borrowing-form">
     <div class="form-group">
         <label>Member</label>
-        <input type="text" value="" class="form-control"
+        <div class="tt-container">
+            <input id="member" name="member" data-rule-validmember="true" type="text" value="" class="form-control typeahead" required />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <ul id="single-member-list" class="list-group" style="display:none">
+                <li class="list-group-item" id="current-member"></li>
+            </ul>
+        </div>
     </div>
     <div class="form-group">
         <label>Books</label>
-        <input type="text" value="" class="form-control"
+        <div class="tt-container">
+            <input id="book" name="book" data-rule-validbook="true" type="text" value="" class="form-control typeahead" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <ul id="books-list" class="list-group"></ul>
+        </div>
     </div>
     <button class="btn btn-primary">Submit</button>
 </form>
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            // Prevent default enter to submit form
+            $(window).keydown((e) => {
+                if (e.keyCode == 13 || e.charCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            // ViewModel on client to store selected
+            let vm = {
+                bookIds: []
+            }
 
+            // Bloodhound is the suggestion engine behind typeahead
+            let members = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '/api/members',
+                remote: {
+                    url: "/api/members?query=%QUERY",
+                    wildcard: '%QUERY'
+                }
+            });
+
+            // Books Bloodhound
+            let books = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '/api/books',
+                remote: {
+                    url: "/api/books?query=%QUERY",
+                    wildcard: '%QUERY'
+                }
+            });
+
+
+            // Initialize Bloodhounds
+            members.initialize();
+            books.initialize();
+
+            console.log(members);
+            console.log(books);
+
+            // Enable TypeAhead for Member Input
+            $('#member').typeahead(
+                {
+                    minLength: 2,
+                    highlight: true
+                },
+                {
+                    name: 'members',
+                    display: 'name',
+                    source: members
+                }
+            ).on('typeahead:select', (e, member) => {
+                vm.memberId = member.id;
+                $('#single-member-list').show()
+                $("#current-member").text(member.name);
+            });
+
+            // Enable TypeAhead for Book Input
+            $('#book').typeahead(
+                {
+                    minLength: 2,
+                    highlight: true
+                },
+                {
+                    name: 'books',
+                    display: 'name',
+                    source: books
+                }
+            ).on('typeahead:select', (e, book) => {
+                console.log(book.id);
+                $('#books-list').append("<li class='list-group-item'>" + book.name + "</li>");
+                $("#book").typeahead("val", "");
+                vm.bookIds.push(book.id);
+            });
+
+
+            $.validator.addMethod("validmember", () => {
+                return vm.memberId && vm.memberId !== 0;
+            }, "Please select a valid member.");
+
+            $.validator.addMethod("validbook", () => {
+                return vm.bookIds.length > 0;
+            }, "Please select at least one book.");
+
+            // Submit the form after jquery validation
+            let validator = $('#borrowing-form').validate({
+                submitHandler: () => {
+                    $.ajax({
+                        url: "/api/borrowings",
+                        method: "post",
+                        data: vm
+                    }
+                    ).done(() => {
+                        toastr.success("New borrowing successfully added")
+
+                        // Reset Form Values
+                        $("#member").typeahead("val", "")
+                        $("#book").typeahead("val", "")
+                        $("#books-list").empty();
+                        $('#single-member-list').hide()
+                        $("#current-member").text("");
+                        // Reset the View Model
+                        vm = { bookIds: [] }
+
+                        // Reset this current validator
+                        validator.resetForm();
+                    }).fail(() => {
+                        toastr.error("Something unexpected occured. Please try again. (Book may be currently out of stock)")
+                    });
+
+                    return false;
+                }
+            });
+
+        });
+
+    </script>
+}

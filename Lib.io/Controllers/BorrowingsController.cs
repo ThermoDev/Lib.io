@@ -37,29 +37,12 @@ namespace Lib.io.Controllers {
             else {
                 return View("TableRead");
             }
-
-            // Previous configuration for supplying Borrowings to the View
-            // Use this if we do not use RESTful Design
-            /*
-            var borrowings = _context.Borrowings.Include(b => b.Genre).ToList();
-            if (!pageIndex.HasValue && String.IsNullOrEmpty(sortBy)) {
-                return View("TableEdit", borrowings);
-            }
-
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
-            if (String.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
-            return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
-            */
         }
 
         // GET: Borrowings/New
         [Authorize(Roles = RoleName.CanManageBorrowings)]
         public ActionResult New() {
-
             return View("BorrowingForm");
-
         }
     }
 }

@@ -14,26 +14,6 @@
     </thead>
     <tbody></tbody>
 </table>
-@*
-    <!-- Use if we are parsing the Book Model to this View from the Controller -->
-     <table class="table table-bordered">
-         <thead>
-             <tr>
-                 <th>Book</th>
-                 <th>Genre</th>
-             </tr>
-         </thead>
-         @foreach (var book in Model) {
-             <tr>
-                 <td>
-                     @Html.ActionLink(book.Name, "Edit", "Books", new { Id = book.Id }, null)
-                 </td>
-                 <td>
-                     @book.Genre.Name
-                 </td>
-             </tr>
-         }
-     </table>*@
 
 
 @section scripts {

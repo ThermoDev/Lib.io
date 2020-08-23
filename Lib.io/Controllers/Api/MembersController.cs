@@ -20,12 +20,19 @@ namespace Lib.io.Controllers.Api {
 
         // GET: /api/members
         [HttpGet]
-        public IEnumerable<MemberDto> GetMembers() {
+        // Optional param query
+        public IEnumerable<MemberDto> GetMembers(string query = null) {
+
+            var membersQuery = String.IsNullOrWhiteSpace(query)
+                ? _context.Members.Include(m => m.MembershipType)
+                : _context.Members.Include(m => m.MembershipType).Where(m => m.Name.Contains(query));
+
             // Maps the Member to the MemberDto, and returns the reference to this method.
-            return _context.Members
-                .Include(m => m.MembershipType)
+            var memberDto = membersQuery
                 .ToList()
                 .Select(Mapper.Map<Member, MemberDto>);
+
+            return memberDto;
         }
 
         // GET: /api/members/<id>
@@ -41,7 +48,7 @@ namespace Lib.io.Controllers.Api {
 
         // POST: /api/members
         [HttpPost]
-        [Authorize(Roles = RoleName.CanManageMembers)]
+        //[Authorize(Roles = RoleName.CanManageMembers)]
         public IHttpActionResult CreateMember(MemberDto memberDto) {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -60,6 +67,23 @@ namespace Lib.io.Controllers.Api {
         [HttpPut]
         [Authorize(Roles = RoleName.CanManageMembers)]
         public void UpdateMember(int id, MemberDto memberDto) {
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+            var memberInDb = _context.Members.Single(m => m.Id == id);
+            if (memberInDb == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            // Use second argument for the existing member in database.
+            Mapper.Map<MemberDto, Member>(memberDto, memberInDb);
+
+            _context.SaveChanges();
+        }
+
+        // PUT: /api/members/<id>
+        [HttpPatch]
+        [Authorize(Roles = RoleName.CanManageMembers)]
+        public void PatchMember(int id, MemberDto memberDto) {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 

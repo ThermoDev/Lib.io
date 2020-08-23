@@ -41,6 +41,7 @@ namespace Lib.io.Controllers {
                 Member = new Member(),
                 MembershipTypes = membershipTypes
             };
+            ViewBag.Message = "Create Member";
             return View("MemberForm", viewModel);
         }
 
@@ -53,6 +54,7 @@ namespace Lib.io.Controllers {
                 Member = member,
                 MembershipTypes = _context.MembershipTypes.ToList()
             };
+            ViewBag.Message = "Edit Member";
             return View("MemberForm", viewModel);
         }
 

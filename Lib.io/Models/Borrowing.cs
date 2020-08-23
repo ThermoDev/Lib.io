@@ -16,6 +16,10 @@ namespace Lib.io.Models {
 
         public DateTime DateBorrowed { get; set; }
 
+        [Required]
         public DateTime? DateReturned { get; set; }
+
+        [Required]
+        public Boolean HasReturned { get; set; }
     }
 }

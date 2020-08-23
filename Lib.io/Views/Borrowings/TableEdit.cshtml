@@ -1,11 +1,13 @@
 ﻿@model List<Lib.io.Models.Borrowing>
 
 <h1>Current Book Borrowings</h1>
+@Html.ActionLink("New Borrowing", "New", "Borrowings", null, new { @class = "btn btn-primary", @style = "margin:10px;" })
 <table id="borrowings" class="table table-bordered">
     <thead>
         <tr>
             <th>Member</th>
             <th>Book Borrowed</th>
+            <th>Delete Borrowing</th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -25,10 +27,33 @@
                     {
                         data: "book.name"
                     },
+                    {
+                        data: "id",
+                        render: (data, type, borrowing) => {
+                            return "<button class='btn btn-danger js-delete' data-book-name='" + borrowing.book.name + "'data-member-name='" + borrowing.member.name + "'data-borrowing-id=" + data + " > Delete</button > "
+                        }
+                    }
                 ]
             });
+            
+            $("#borrowings").on("click", ".js-delete", function () {
+                let button = $(this);
 
-
+                // Open a BootBox Confirm on Click
+                bootbox.confirm("Are you sure you want to delete the borrowing: " + button.attr("data-book-name") + " from " + button.attr("data-member-name") + "?", (result) => {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/borrowings/" + button.attr("data-borrowing-id"),
+                            method: "DELETE",
+                            success: () => {
+                                // Retrieve row from the DataTable by finding the tr tag from the parent,
+                                // then call remove() and update the table using draw()
+                                table.row(button.parents('tr')).remove().draw();
+                            }
+                        })
+                    }
+                });
+            })
         });
     </script>
 }

@@ -71,6 +71,7 @@ namespace Lib.io.Controllers.Api {
 
             foreach (var book in books) {
                 var borrowing = new Borrowing { Member = member, Book = book, DateBorrowed = DateTime.Today, DateReturned = DateTime.Today, HasReturned = false };
+                // If we have it in stock, add it as a borrowing, and reduce the number in stock
                 if (book.NumberInStock > 0) {
                     _context.Borrowings.Add(borrowing);
                     book.NumberInStock--;

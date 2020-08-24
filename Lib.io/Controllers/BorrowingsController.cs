@@ -42,7 +42,7 @@ namespace Lib.io.Controllers {
             }
         }
 
-        // GET: Borrowings/Previous
+        // GET: Borrowings/All
         // Returns an ActionResult
         // ActionResult can be HTTPNotFound, EmptyResult, etc...
         // Nullable by using ?, string default to nullable

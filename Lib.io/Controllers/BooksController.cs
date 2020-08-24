@@ -88,6 +88,8 @@ namespace Lib.io.Controllers {
                 var viewModel = new BookViewFormModel(book) {
                     Genres = _context.Genres.ToList()
                 };
+
+                ViewBag.Message = book.Id == 0 ? "Create Book" : "Edit Book";
                 return View("BookForm", viewModel);
             }
 

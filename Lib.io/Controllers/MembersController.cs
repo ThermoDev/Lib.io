@@ -70,6 +70,8 @@ namespace Lib.io.Controllers {
                     Member = member,
                     MembershipTypes = _context.MembershipTypes.ToList()
                 };
+
+                ViewBag.Message = member.Id == 0 ? "Create Member" : "Edit Member";
                 return View("MemberForm", viewModel);
             }
 

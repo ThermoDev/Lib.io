@@ -16,5 +16,11 @@ namespace Lib.io.Dtos {
 
         [Required]
         public BookDto Book { get; set; }
+
+        public DateTime DateReturned { get; set; }
+        public DateTime DateBorrowed { get; set; }
+
+        [Required]
+        public Boolean HasReturned { get; set; }
     }
 }

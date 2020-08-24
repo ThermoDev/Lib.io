@@ -54,7 +54,7 @@
             let members = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                prefetch: '/api/members',
+                //prefetch: '/api/members',
                 remote: {
                     url: "/api/members?query=%QUERY",
                     wildcard: '%QUERY'
@@ -65,7 +65,7 @@
             let books = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                prefetch: '/api/books',
+                //prefetch: '/api/books',
                 remote: {
                     url: "/api/books?query=%QUERY",
                     wildcard: '%QUERY'
@@ -91,11 +91,13 @@
                     display: 'name',
                     source: members
                 }
-            ).on('typeahead:select', (e, member) => {
-                vm.memberId = member.id;
-                $('#single-member-list').show()
-                $("#current-member").text(member.name);
-            });
+            )
+                // Change selected member on ViewModel and DOM
+                .on('typeahead:select', (e, member) => {
+                    vm.memberId = member.id;
+                    $('#single-member-list').show()
+                    $("#current-member").text(member.name);
+                });
 
             // Enable TypeAhead for Book Input
             $('#book').typeahead(
@@ -108,12 +110,14 @@
                     display: 'name',
                     source: books
                 }
-            ).on('typeahead:select', (e, book) => {
-                console.log(book.id);
-                $('#books-list').append("<li class='list-group-item'>" + book.name + "</li>");
-                $("#book").typeahead("val", "");
-                vm.bookIds.push(book.id);
-            });
+            )
+                // On Select, add book to DOM, Push it to ViewModel
+                .on('typeahead:select', (e, book) => {
+                    console.log(book.id);
+                    $('#books-list').append("<li class='list-group-item'>" + book.name + "</li>");
+                    $("#book").typeahead("val", "");
+                    vm.bookIds.push(book.id);
+                });
 
 
             $.validator.addMethod("validmember", () => {
@@ -133,7 +137,7 @@
                         data: vm
                     }
                     ).done(() => {
-                        toastr.success("New borrowing successfully added")
+                        toastr.success("New borrowing(s) successfully added")
 
                         // Reset Form Values
                         $("#member").typeahead("val", "")

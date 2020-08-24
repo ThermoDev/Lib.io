@@ -15,11 +15,10 @@ namespace Lib.io.Models {
         public Book Book { get; set; }
 
         public DateTime DateBorrowed { get; set; }
-
-        [Required]
+        
         public DateTime? DateReturned { get; set; }
 
-        [Required]
-        public Boolean HasReturned { get; set; }
+        //[Required]
+        public bool HasReturned { get; set; }
     }
 }

@@ -5,8 +5,10 @@
 <table id="borrowings" class="table table-bordered">
     <thead>
         <tr>
+            <th>Date Borrowed</th>
             <th>Member</th>
             <th>Book Borrowed</th>
+            <th>Return Borrowing</th>
             <th>Delete Borrowing</th>
         </tr>
     </thead>
@@ -22,6 +24,12 @@
                 },
                 columns: [
                     {
+                        data: "dateBorrowed",
+                        render: (data) => {
+                            return new Date(data).toDateString()
+                        }
+                    },
+                    {
                         data: "member.name",
                     },
                     {
@@ -30,12 +38,18 @@
                     {
                         data: "id",
                         render: (data, type, borrowing) => {
-                            return "<button class='btn btn-danger js-delete' data-book-name='" + borrowing.book.name + "'data-member-name='" + borrowing.member.name + "'data-borrowing-id=" + data + " > Delete</button > "
+                            return "<button class='btn btn-warning js-return' data-book-name='" + borrowing.book.name + "'data-member-name='" + borrowing.member.name + "'data-borrowing-id=" + data + " >Return</button > "
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: (data, type, borrowing) => {
+                            return "<button class='btn btn-danger js-delete' data-book-name='" + borrowing.book.name + "'data-member-name='" + borrowing.member.name + "'data-borrowing-id=" + data + " >Delete</button > "
                         }
                     }
                 ]
             });
-            
+
             $("#borrowings").on("click", ".js-delete", function () {
                 let button = $(this);
 
@@ -45,6 +59,25 @@
                         $.ajax({
                             url: "/api/borrowings/" + button.attr("data-borrowing-id"),
                             method: "DELETE",
+                            success: () => {
+                                // Retrieve row from the DataTable by finding the tr tag from the parent,
+                                // then call remove() and update the table using draw()
+                                table.row(button.parents('tr')).remove().draw();
+                            }
+                        })
+                    }
+                });
+            });
+            $("#borrowings").on("click", ".js-return", function () {
+                let button = $(this);
+
+                // Open a BootBox Confirm on Click
+                bootbox.confirm("Are you sure you want to return the borrowing: " + button.attr("data-book-name") + " from " + button.attr("data-member-name") + "?", (result) => {
+                    let isReturn = "?isReturning=true";
+                    if (result) {
+                        $.ajax({
+                            url: "/api/borrowings/" + button.attr("data-borrowing-id") + isReturn,
+                            method: "PUT",
                             success: () => {
                                 // Retrieve row from the DataTable by finding the tr tag from the parent,
                                 // then call remove() and update the table using draw()

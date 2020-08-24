@@ -4,8 +4,10 @@
 <table id="borrowings" class="table table-bordered">
     <thead>
         <tr>
+            <th>Date Borrowed</th>
             <th>Member</th>
             <th>Book Borrowed</th>
+            <th>Return Borrowing</th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -20,15 +22,45 @@
                 },
                 columns: [
                     {
+                        data: "dateBorrowed",
+                        render: (data) => {
+                            return new Date(data).toDateString()
+                        }
+                    },
+                    {
                         data: "member.name",
                     },
                     {
                         data: "book.name"
                     },
+                    {
+                        data: "id",
+                        render: (data, type, borrowing) => {
+                            return "<button class='btn btn-warning js-return' data-book-name='" + borrowing.book.name + "'data-member-name='" + borrowing.member.name + "'data-borrowing-id=" + data + " >Return</button > "
+                        }
+                    }
                 ]
             });
+            
+            $("#borrowings").on("click", ".js-return", function () {
+                let button = $(this);
 
-
+                // Open a BootBox Confirm on Click
+                bootbox.confirm("Are you sure you want to return the borrowing: " + button.attr("data-book-name") + " from " + button.attr("data-member-name") + "?", (result) => {
+                    let isReturn = "?isReturning=true";
+                    if (result) {
+                        $.ajax({
+                            url: "/api/borrowings/" + button.attr("data-borrowing-id") + isReturn,
+                            method: "PUT",
+                            success: () => {
+                                // Retrieve row from the DataTable by finding the tr tag from the parent,
+                                // then call remove() and update the table using draw()
+                                table.row(button.parents('tr')).remove().draw();
+                            }
+                        })
+                    }
+                });
+            })
         });
     </script>
 }

@@ -26,6 +26,9 @@ namespace Lib.io.App_Start {
 
             Mapper.CreateMap<Borrowing, BorrowingDto>();
             Mapper.CreateMap<BorrowingDto, Borrowing>().ForMember(b => b.Id, opt => opt.Ignore());
+
+            Mapper.CreateMap<Borrowing, UpdateBorrowingDto>();
+            Mapper.CreateMap<UpdateBorrowingDto, Borrowing>();
         }
     }
 }

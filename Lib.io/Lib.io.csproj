@@ -234,6 +234,7 @@
     <Compile Include="Dtos\GenreDto.cs" />
     <Compile Include="Dtos\MemberDto.cs" />
     <Compile Include="Dtos\MembershipTypeDto.cs" />
+    <Compile Include="Dtos\UpdateBorrowingDto.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -317,6 +318,10 @@
     <Compile Include="Migrations\202008230953247_AddHasReturnedToBorrowings.cs" />
     <Compile Include="Migrations\202008230953247_AddHasReturnedToBorrowings.Designer.cs">
       <DependentUpon>202008230953247_AddHasReturnedToBorrowings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008240530360_UpdateDateReturned.cs" />
+    <Compile Include="Migrations\202008240530360_UpdateDateReturned.Designer.cs">
+      <DependentUpon>202008240530360_UpdateDateReturned.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -676,6 +681,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008230953247_AddHasReturnedToBorrowings.resx">
       <DependentUpon>202008230953247_AddHasReturnedToBorrowings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008240530360_UpdateDateReturned.resx">
+      <DependentUpon>202008240530360_UpdateDateReturned.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

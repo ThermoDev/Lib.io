@@ -54,42 +54,55 @@
             let members = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                //prefetch: '/api/members',
-                remote: {
-                    url: "/api/members?query=%QUERY",
-                    wildcard: '%QUERY'
-                }
+                prefetch: { url: '/api/members', cache: false },
+                //remote: {
+                //    url: "/api/members?query=%QUERY",
+                //    wildcard: '%QUERY',
+                //    cache: false
+                //}
             });
 
             // Books Bloodhound
             let books = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                //prefetch: '/api/books',
-                remote: {
-                    url: "/api/books?query=%QUERY",
-                    wildcard: '%QUERY'
-                }
+                prefetch: { url: '/api/books', cache: false},
+                //remote: {
+                //    url: "/api/books?query=%QUERY",
+                //    wildcard: '%QUERY',
+                //    cache: false
+                //}
             });
 
+            // Clear Prefetch Cache
+            members.clearPrefetchCache();
+            books.clearPrefetchCache();
+
+            // Clear Remote Cache
+            members.clearRemoteCache();
+            books.clearRemoteCache();
 
             // Initialize Bloodhounds
             members.initialize();
             books.initialize();
 
-            console.log(members);
-            console.log(books);
+            //console.log(members);
+            //console.log(books);
 
             // Enable TypeAhead for Member Input
             $('#member').typeahead(
                 {
                     minLength: 2,
-                    highlight: true
+                    highlight: true,
                 },
                 {
                     name: 'members',
                     display: 'name',
-                    source: members
+                    source: members,
+                    displayKey: (members) => {
+                        return members.name;
+                    },
+                    source: members.ttAdapter()
                 }
             )
                 // Change selected member on ViewModel and DOM

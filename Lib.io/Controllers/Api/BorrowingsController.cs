@@ -23,8 +23,20 @@ namespace Lib.io.Controllers.Api
         }
         // GET: /api/borrowings
         [HttpGet]
-        public IEnumerable<BorrowingDto> GetBorrowings()
+        public IEnumerable<BorrowingDto> GetBorrowings(bool all = false)
         {
+
+            if (all)
+            {
+                return _context.Borrowings
+                  .Include(b => b.Member)
+                  .Include(b => b.Member.MembershipType)
+                  .Include(b => b.Book)
+                  .Include(b => b.Book.Genre)
+                  .ToList()
+                  .Select(Mapper.Map<Borrowing, BorrowingDto>);
+
+            }
             // Maps the Borrowing to the BorrowingDto, and returns the reference to this method.
             // Eager Load Everything
             return _context.Borrowings

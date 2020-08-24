@@ -1,6 +1,7 @@
 ﻿@model List<Lib.io.Models.Borrowing>
 
 <h1>Current Book Borrowings</h1>
+@Html.ActionLink("View All Borrowings", "All", "Borrowings", null, new { @class = "btn btn-warning", @style = "margin:10px;" })
 <table id="borrowings" class="table table-bordered">
     <thead>
         <tr>

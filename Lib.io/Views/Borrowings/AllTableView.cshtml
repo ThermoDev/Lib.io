@@ -1,0 +1,52 @@
+﻿@model List<Lib.io.Models.Borrowing>
+
+<h1>All Book Borrowings</h1>
+@Html.ActionLink("Back to Current Borrowings", "Index", "Borrowings", null, new { @class = "btn btn-warning", @style = "margin:10px;" })
+<table id="borrowings" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Date Borrowed</th>
+            <th>Member</th>
+            <th>Book Borrowed</th>
+            <th>Has Returned</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts {
+    <script>
+        $(document).ready(() => {
+            let table = $("#borrowings").DataTable({
+                ajax: {
+                    url: "/api/borrowings?all=true",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "dateBorrowed",
+                        render: (data) => {
+                            return new Date(data).toDateString()
+                        }
+                    },
+                    {
+                        data: "member.name",
+                    },
+                    {
+                        data: "book.name"
+                    },
+                    {
+                        data: "hasReturned",
+                        render: (data) => {
+                            let icon = data == true ? "ok" : "remove";
+                            return "<span class='glyphicon glyphicon-"+icon +"' />"
+                        }
+                    },
+                ]
+            });
+        });
+    </script>
+}
+
+
+
+

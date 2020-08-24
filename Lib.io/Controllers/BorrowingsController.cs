@@ -29,13 +29,34 @@ namespace Lib.io.Controllers {
         // ActionResult can be HTTPNotFound, EmptyResult, etc...
         // Nullable by using ?, string default to nullable
         // Paramaters are query values in Request
-        public ActionResult Index(int? pageIndex, string sortBy) {
+        public ActionResult Index(int? pageIndex, string sortBy)
+        {
 
-            if (User.IsInRole(RoleName.CanManageBorrowings)) {
+            if (User.IsInRole(RoleName.CanManageBorrowings))
+            {
                 return View("TableEdit");
             }
-            else {
+            else
+            {
                 return View("TableRead");
+            }
+        }
+
+        // GET: Borrowings/Previous
+        // Returns an ActionResult
+        // ActionResult can be HTTPNotFound, EmptyResult, etc...
+        // Nullable by using ?, string default to nullable
+        // Paramaters are query values in Request
+        public ActionResult All(int? pageIndex, string sortBy)
+        {
+
+            if (User.IsInRole(RoleName.CanManageBorrowings))
+            {
+                return View("AllTableEdit");
+            }
+            else
+            {
+                return View("AllTableView");
             }
         }
 

@@ -603,6 +603,8 @@
     <Content Include="Views\Borrowings\TableRead.cshtml" />
     <Content Include="Views\Borrowings\TableEdit.cshtml" />
     <Content Include="Views\Borrowings\BorrowingForm.cshtml" />
+    <Content Include="Views\Borrowings\AllTableEdit.cshtml" />
+    <Content Include="Views\Borrowings\AllTableView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
